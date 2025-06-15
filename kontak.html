@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontak</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="img/icon.png">
+    <style>
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Kontak Page Styles */
+        .kontak-container {
+            max-width: 1000px;
+            margin: 150px auto 100px;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .kontak-info {
+            background: white;
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kontak-info::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+
+        .kontak-info h2 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--dark);
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .kontak-info h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+        }
+
+        .kontak-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 25px;
+        }
+
+        .kontak-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(67, 97, 238, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: var(--primary);
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .kontak-item:hover .kontak-icon {
+            background: var(--primary);
+            color: white;
+            transform: rotate(10deg);
+        }
+
+        .kontak-text h3 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            color: var(--dark);
+        }
+
+        .kontak-text p, .kontak-text a {
+            color: #555;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .kontak-text a:hover {
+            color: var(--primary);
+        }
+
+        .social-media {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-media a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            font-size: 1.2rem;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .social-media a:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-5px);
+        }
+
+        /* Form Styles */
+        .form-container {
+            background: white;
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .form-container h2 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--dark);
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .form-container h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: var(--transition);
+            background: #fafafa;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+            background: white;
+        }
+
+        .form-control:focus + .focus-border {
+            transform: scaleX(1);
+        }
+
+        .focus-border {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: var(--transition);
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .btn-submit {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: block;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn-submit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: var(--secondary);
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .btn-submit:hover::before {
+            width: 100%;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(67, 97, 238, 0.3);
+        }
+
+        .error-message {
+            color: var(--warning);
+            font-size: 0.9rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .form-message {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .form-message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .form-message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 10% 30px;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .copyright {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .page-title h1 {
+                font-size: 2.2rem;
+            }
+            
+            .kontak-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .page-title h1 {
+                font-size: 1.8rem;
+            }
+            
+            .laporan-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="spinner"></div>
+        <div class="loading-text">Memuat Kontak Siswa</div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html" class="logo">
+            <i class="fas fa-file-alt logo-icon"></i>
+            <div class="logo-text">Laporan<span>Akbil</span></div>
+        </a>
+        
+        <div class="nav-links">
+            <a href="index.html">Beranda</a>
+            <div class="dropdown">
+                <a href="#" class="dropdown-toggle">Laporan <i class="fas fa-chevron-down"></i></a>
+                <div class="dropdown-menu">
+                    <a href="laporan/laporan1.html">Juli</a>
+                    <a href="laporan/laporan2.html">Agustus</a>
+                    <a href="laporan/laporan3.html">September</a>
+                    <a href="laporan/laporan4.html">Oktober</a>
+                    <a href="laporan/laporan5.html">November</a>
+                    <a href="laporan/laporan6.html">Desember</a>
+                </div>
+            </div>
+            <a href="kontak.html">Kontak</a>
+        </div>
+        
+        <div class="mobile-menu-btn">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+
+    <!-- Halaman Kontak -->
+    <section id="kontak-page" class="kontak-container">
+        <div class="kontak-info" data-aos="fade-right">
+            <h2>Informasi Kontak</h2>
+            
+            <div class="kontak-item">
+                <div class="kontak-icon">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="kontak-text">
+                    <h3>Profil Siswa</h3>
+                    <p>Akbil Ahmad Royani</p>
+                </div>
+            </div>
+            
+            <div class="kontak-item">
+                <div class="kontak-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="kontak-text">
+                    <h3>Email</h3>
+                    <a href="mailto:ahmadakbil20@gmail.com">ahmadakbil20@gmail.com</a>
+                </div>
+            </div>
+            
+            <div class="kontak-item">
+                <div class="kontak-icon">
+                    <i class="fab fa-instagram"></i>
+                </div>
+                <div class="kontak-text">
+                    <h3>Instagram</h3>
+                    <a href="https://www.instagram.com/akblhmdr/" target="_blank">@akblhmdr</a>
+                </div>
+            </div>
+            
+            <div class="kontak-item">
+                <div class="kontak-icon">
+                    <i class="fas fa-building"></i>
+                </div>
+                <div class="kontak-text">
+                    <h3>Tempat PKL</h3>
+                    <p>Feriari Komputer & CCTV</p>
+                </div>
+            </div>
+            
+            <div class="social-media">
+                <a href="https://instagram.com/akbilahmadroyani" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/in/akbil-ahmad-royani-8994b636b/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/wifier345" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://wa.me/6285134109503" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+        
+        <div class="form-container" data-aos="fade-left">
+            <h2>Kritik & Saran</h2>
+            <form id="kontak-form">
+                <div class="form-group">
+                    <label for="nama">Nama Lengkap</label>
+                    <input type="text" id="nama" name="nama" class="form-control" placeholder="Masukkan nama Anda">
+                    <div class="focus-border"></div>
+                    <div class="error-message" id="nama-error">Nama harus diisi</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="Masukkan email Anda">
+                    <div class="focus-border"></div>
+                    <div class="error-message" id="email-error">Email tidak valid</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="pesan">Pesan</label>
+                    <textarea id="pesan" name="pesan" class="form-control" placeholder="Tulis pesan Anda di sini..."></textarea>
+                    <div class="focus-border"></div>
+                    <div class="error-message" id="pesan-error">Pesan harus diisi (minimal 20 karakter)</div>
+                </div>
+                
+                <button type="submit" class="btn-submit">
+                    <i class="fas fa-paper-plane"></i> Kirim Pesan
+                </button>
+            </form>
+        </div>
+        <div id="form-message" class="form-message" style="display: none;"></div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Tentang Saya</h3>
+                <p>Siswa SMK Negeri 1 Rengat Barat jurusan Teknik Komputer dan Jaringan.
+                Saat ini sedang melaksanakan Praktek Kerja Lapangan di Feriari Komputer & CCTV</p>
+                <div class="social-links">
+                    <a href="https://instagram.com/akbilahmadroyani" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/in/akbil-ahmad-royani-8994b636b/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/wifier345" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://wa.me/6285134109503" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Navigasi Cepat</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html"><i class="fas fa-home"></i> Beranda</a></li>
+                    <li><a href="kontak.html"><i class="fas fa-envelope"></i> Halaman Kontak</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Kontak PKL</h3>
+                <ul class="footer-links">
+                    <li><a href="https://www.google.com/maps/place/Ferari+Komputer+%26+CCTV/@-0.374052,102.5361317,17z/data=!3m1!4b1!4m6!3m5!1s0x2e29bbfab45218dd:0x3cdd293de9b0a4bf!8m2!3d-0.374052!4d102.5410026!16s%2Fg%2F11c60bzjqt?entry=ttu&g_ep=EgoyMDI1MDYxMS4wIKXMDSoASAFQAw%3D%3D" target="_blank"><i class="fas fa-building"></i> Feriari Komputer & CCTV</a></li>
+                    <li><a href="https://maps.app.goo.gl/WyVWEtUTtB6o7Qsy9"><i class="fas fa-map-marker-alt"></i> Jl. Azki Aris, Kp. Besar Kota, Kec. Rengat, Kabupaten Indragiri Hulu, Riau</a></li>
+                    <li><a href="https://wa.me/6281374207700"><i class="fas fa-phone"></i> 081374207700</a></li>
+                    <li><a target="_blank" href="https://id4488561-ferrari-komputer.contact.page/"><i class="fas fa-globe"></i> ferrari-komputer.contact.page</a></li>
+                    <li><a href="https://id4488561-ferrari-komputer.contact.page/"><i class="fas fa-user-tie"></i> Pembimbing: Bapak Ahmad Surya</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            &copy; 2025 Laporan Harian PKL. Hak Cipta Dilindungi | Dibuat oleh <a href="https://tkjboys.site" target="_blank">Akbil Ahmad Royani</a> 
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
+        // Inisialisasi AOS
+        AOS.init({
+            duration: 800,
+            once: true,
+            easing: 'ease-in-out',
+            mirror: false
+        });
+
+        // Loading screen
+        window.addEventListener('load', function() {
+            const loadingScreen = document.getElementById('loading-screen');
+            setTimeout(() => {
+                loadingScreen.style.opacity = '0';
+                loadingScreen.style.visibility = 'hidden';
+            }, 1000);
+        });
+
+        // Sticky navbar effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Initialize EmailJS
+        (function() {
+            emailjs.init("aoWiGaWit6olHe52J");
+        })();
+
+        const form = document.getElementById('kontak-form');
+        const formMessage = document.getElementById('form-message');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Reset message display
+            formMessage.style.display = 'none';
+            
+            let isValid = true;
+            
+            // Validate name
+            const nameInput = document.getElementById('nama');
+            const nameError = document.getElementById('nama-error');
+            if (nameInput.value.trim() === '') {
+                nameError.style.display = 'block';
+                isValid = false;
+            } else {
+                nameError.style.display = 'none';
+            }
+            
+            // Validate email
+            const emailInput = document.getElementById('email');
+            const emailError = document.getElementById('email-error');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(emailInput.value)) {
+                emailError.style.display = 'block';
+                isValid = false;
+            } else {
+                emailError.style.display = 'none';
+            }
+            
+            // Validate message
+            const messageInput = document.getElementById('pesan');
+            const messageError = document.getElementById('pesan-error');
+            if (messageInput.value.trim().length < 10) {
+                messageError.style.display = 'block';
+                isValid = false;
+            } else {
+                messageError.style.display = 'none';
+            }
+            
+            if (isValid) {
+                // Change button to loading state
+                const submitBtn = form.querySelector('button[type="submit"]');
+                const originalBtnText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
+                submitBtn.disabled = true;
+                
+                emailjs.sendForm('service_4v9m2fi', 'template_orsf3ku', form)
+                    .then(function(response) {
+                        // Show success message
+                        formMessage.textContent = 'Terima kasih! Pesan Anda telah berhasil dikirim.';
+                        formMessage.className = 'form-message success';
+                        formMessage.style.display = 'block';
+                        
+                        // Reset form
+                        form.reset();
+                        
+                        // Hide message after 5 seconds
+                        setTimeout(() => {
+                            formMessage.style.display = 'none';
+                        }, 5000);
+                    }, function(error) {
+                        // Show error message
+                        formMessage.textContent = 'Maaf, terjadi kesalahan. Silakan coba lagi nanti.';
+                        formMessage.className = 'form-message error';
+                        formMessage.style.display = 'block';
+                        
+                        console.error('Email sending failed:', error);
+                    })
+                    .finally(() => {
+                        // Reset button state
+                        submitBtn.innerHTML = originalBtnText;
+                        submitBtn.disabled = false;
+                    });
+            }
+        });
+
+        // Input focus effect
+        document.querySelectorAll('.form-control').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.querySelector('.focus-border').style.transform = 'scaleX(1)';
+            });
+            
+            input.addEventListener('blur', function() {
+                if (this.value === '') {
+                    this.parentElement.querySelector('.focus-border').style.transform = 'scaleX(0)';
+                }
+            });
+        });
+
+        // Mobile menu toggle
+        function setupMobileMenu() {
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+            
+            if (menuBtn && navLinks) {
+                menuBtn.addEventListener('click', () => {
+                    navLinks.classList.toggle('active');
+                    menuBtn.innerHTML = navLinks.classList.contains('active') 
+                        ? '<i class="fas fa-times"></i>' 
+                        : '<i class="fas fa-bars"></i>';
+                });
+            }
+        }
+
+        // Mobile dropdown toggle
+        function setupMobileDropdown() {
+            document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
+                toggle.addEventListener('click', (e) => {
+                    if (window.innerWidth <= 768) {
+                        e.preventDefault();
+                        const dropdown = toggle.parentElement;
+                        dropdown.classList.toggle('active');
+                    }
+                });
+            });
+        }
+
+        // Update DOMContentLoaded function
+        document.addEventListener('DOMContentLoaded', function() {
+            // ... kode yang sudah ada ...
+            setupMobileMenu();
+            setupMobileDropdown();
+        });
+    </script>
+</body>
+</html>

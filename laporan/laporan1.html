@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan Harian PKL - Laporan Bulan 1</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/laporan.css">
+    <style>
+        /* Laporan Page Styles */
+        .container {
+            max-width: 1200px;
+            margin: 100px auto 50px;
+            padding: 0 20px;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .page-title h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.8rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+
+        .page-title p {
+            color: #555;
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+
+        .page-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 10px;
+        }
+
+        /* Tabs Navigation */
+        .tabs-container {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+        }
+
+        .tab-content {
+            display: none;
+        }   
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tab {
+            flex: 1;
+            min-width: 120px;
+            padding: 15px 20px;
+            text-align: center;
+            color: white;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tab:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .tab.active {
+            background: white;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .tab.active::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        /* Laporan Cards */
+        .laporan-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .laporan-card {
+            display: none;
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            transform: translateY(0);
+            opacity: 0;
+            animation: fadeInUp 0.6s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .card-header {
+            padding: 20px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            position: relative;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .card-header::after {
+            content: '\f078';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: var(--transition);
+        }
+
+        .card-header.active::after {
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        .card-content {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .card-content.active {
+            padding: 20px;
+            max-height: 2000px;
+        }
+
+        .card-content p {
+            line-height: 1.7;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .card-content ul {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .card-content li {
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        .laporan-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 10% 30px;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .copyright {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        /* Dokumentasi Gambar */
+        .dokumentasi-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .dokumentasi-item {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: var(--transition);
+        }
+
+        .dokumentasi-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .dokumentasi-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Lightbox untuk gambar */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+
+        .close-lightbox {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        /* Desktop Behavior */
+        @media (min-width: 769px) {
+            .laporan-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                gap: 25px;
+            }
+            
+            .card-content {
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.4s ease;
+            }
+            
+            .card-content.active {
+                max-height: 2000px; /* Nilai cukup besar untuk menampung konten */
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .page-title {
+                margin-top: 140px;
+            }
+
+            .page-title h1 {
+                font-size: 2.2rem;
+            }
+            
+            .laporan-grid {
+                display: block;
+            }
+            
+            .laporan-card {
+                margin-bottom: 15px;
+                display: block;
+            }
+
+            .report-card {
+                display: none;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .page-title h1 {
+                font-size: 1.8rem;
+            }
+            
+            .laporan-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="spinner"></div>
+        <div class="loading-text">Memuat Laporan PKL</div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="../index.html" class="logo">
+            <i class="fas fa-file-alt logo-icon"></i>
+            <div class="logo-text">Laporan<span>PKL</span></div>
+        </a>
+        
+        <div class="nav-links-laporan">
+            <a href="../index.html">Beranda</a>
+            <div class="dropdown">
+                <a href="#" class="dropdown-toggle">Laporan <i class="fas fa-chevron-down"></i></a>
+                <div class="dropdown-menu">
+                    <a href="#">Juli</a>
+                    <a href="laporan2.html">Agustus</a>
+                    <a href="laporan3.html">September</a>
+                    <a href="laporan4.html">Oktober</a>
+                    <a href="laporan5.html">November</a>
+                    <a href="laporan6.html">Desember</a>
+                </div>
+            </div>
+            <a href="../kontak.html">Kontak</a>
+        </div>
+        
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="Cari laporan...">
+            <button id="search-button"><i class="fas fa-search"></i></button>
+            <div class="search-results-info" id="search-results-info"></div>
+        </div>
+        
+        <div class="mobile-menu-btn">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+
+    <!-- Halaman Laporan -->
+    <section id="laporan-page" class="container">
+        <div class="page-title" data-aos="fade-up">
+            <h1>Laporan Bulan Juli</h1>
+            <p>Berikut adalah laporan harian kegiatan Praktek Kerja Lapangan selama bulan Juli di <strong>Ferrari Komputer & CCTV</strong>, Rengat.</p>
+        </div>
+
+        <div class="tabs-container" data-aos="fade-up">
+            <div class="tabs">
+                <div class="tab active" data-tab="minggu1">Minggu 1</div>
+                <div class="tab" data-tab="minggu2">Minggu 2</div>
+                <div class="tab" data-tab="minggu3">Minggu 3</div>
+                <div class="tab" data-tab="minggu4">Minggu 4</div>
+            </div>
+        </div>
+
+        <div id="minggu1" class="tab-content active">
+            <!-- Laporan Grid (HP) -->
+            <div class="laporan-grid" data-aos="fade-up" data-aos-delay="100">
+                <div class="laporan-card" data-aos="fade-up">
+                    <div class="card-header">
+                        <h3>Senin, 14 Juli 2025</h3>
+                        <p>Hari Pertama PKL</p>
+                    </div>
+                    <div class="card-content">
+                        <p><strong>Aktivitas:</strong> Pengenalan lingkungan kerja...</p>
+                        <p><strong>Pembelajaran:</strong> Memahami workflow tempat pkl...</p>
+                        
+                        <!-- Bagian Dokumentasi -->
+                        <div class="dokumentasi-section">
+                            <h4>Dokumentasi:</h4>
+                            <div class="dokumentasi-container">
+                                <div class="dokumentasi-item">
+                                    <img src="../img/laporan/juli/minggu3/senin/1.jpg" alt="Dokumentasi 1" class="dokumentasi-img">
+                                </div>
+                                <div class="dokumentasi-item">
+                                    <img src="../img/laporan/juli/minggu3/senin/1.jpg" alt="Dokumentasi 1" class="dokumentasi-img">
+                                </div>
+                                <div class="dokumentasi-item">
+                                    <img src="../img/laporan/juli/minggu3/senin/1.jpg" alt="Dokumentasi 1" class="dokumentasi-img">
+                                </div>
+                                <div class="dokumentasi-item">
+                                    <img src="../img/laporan/juli/minggu3/senin/1.jpg" alt="Dokumentasi 1" class="dokumentasi-img">
+                                </div>
+                                <div class="dokumentasi-item">
+                                    <img src="../img/laporan/juli/minggu3/senin/1.jpg" alt="Dokumentasi 1" class="dokumentasi-img">
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="laporan-card" data-aos="fade-up">
+                    <div class="card-header">
+                        <h3>Selasa, 2 Januari 2025</h3>
+                        <p>Hari Pertama PKL</p>
+                    </div>
+                    <div class="card-content">
+                        <p><strong>Aktivitas:</strong> Pengenalan lingkungan kerja...</p>
+                        <p><strong>Pembelajaran:</strong> Memahami budaya perusahaan...</p>
+                        
+                        <!-- Bagian Dokumentasi -->
+                        <div class="dokumentasi-section">
+                            <h4>Dokumentasi:</h4>
+                            <div class="dokumentasi-container">
+                                <div class="dokumentasi-item">
+                                    <img src="img/laporan/14-07-2025.jpg" alt="Dokumentasi 1" class="dokumentasi-img">
+                                </div>
+                                <div class="dokumentasi-item">
+                                    <img src="img/laporan/14-07-2025.jpg" alt="Dokumentasi 1" class="dokumentasi-img">
+                                </div>
+                                <div class="dokumentasi-item">
+                                    <img src="img/laporan/14-07-2025.jpg" alt="Dokumentasi 1" class="dokumentasi-img">
+                                </div>
+                                <div class="dokumentasi-item">
+                                    <img src="img/laporan/14-07-2025.jpg" alt="Dokumentasi 1" class="dokumentasi-img">
+                                </div>
+                                <div class="dokumentasi-item">
+                                    <img src="img/IMG_20250319_193524.jpg" alt="Dokumentasi 2" class="dokumentasi-img">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Laporan Desktop -->
+            <div class="report-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="cardHeader">
+                    <div class="card-header-content">
+                        <h3>Senin, 14 Juli 2025</h3>
+                        <p>Laporan harian kegiatan dan perkembangunan</p>
+                    </div>
+                    <button class="dropdown-btn">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
+                
+                <div class="cardContent">
+                    <div class="section">
+                        <h4>Kegiatan</h4>
+                        <p>1. Meeting pagi dengan tim pengembangan untuk membahas progress proyek</p>
+                        <p>2. Implementasi fitur autentikasi pada aplikasi utama</p>
+                        <p>3. Review kode untuk memastikan kualitas sebelum deployment</p>
+                        <p>4. Diskusi dengan UI/UX designer tentang improvement antarmuka</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h4>Pembelajaran</h4>
+                        <p>1. Mempelajari teknik optimasi performa React menggunakan React.memo</p>
+                        <p>2. Memahami konsep baru tentang serverless architecture</p>
+                        <p>3. Eksperimen dengan library animasi Framer Motion untuk meningkatkan UX</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h4>Dokumentasi</h4>
+                        <p>Beberapa screenshot progress pengembangan hari ini:</p>
+                        <div class="gallery">
+                            <img src="../img/laporan/juli/minggu3/senin/1.jpg">
+                            <img src="../img/laporan/juli/minggu3/senin/1.jpg">
+                            <img src="../img/laporan/juli/minggu3/senin/1.jpg">
+                            <img src="../img/laporan/juli/minggu3/senin/1.jpg">
+                            <img src="../img/laporan/juli/minggu3/senin/1.jpg">
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h4>Kendala</h4>
+                        <div class="kendala-item">
+                            <p>Masalah kompatibilitas library dengan versi Node.js terbaru</p>
+                        </div>
+                        <div class="kendala-item">
+                            <p>Koneksi database terkadang timeout pada beban tinggi</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="minggu2" class="tab-content active">
+            <!-- Laporan Grid (HP) -->
+            <div class="laporan-grid" data-aos="fade-up" data-aos-delay="100">
+                <div class="laporan-card" data-aos="fade-up">
+                    <div class="card-header">
+                        <h3>eSenin, 1 Januari 2025</h3>
+                        <p>Hari Pertama PKL</p>
+                    </div>
+                    <div class="card-content">
+                        <p><strong>Aktivitas:</strong> Pengenalan lingkungan kerja...</p>
+                        <p><strong>Pembelajaran:</strong> Memahami budaya perusahaan...</p>
+                        
+                        <!-- Bagian Dokumentasi -->
+                        <div class="dokumentasi-section">
+                            <h4>Dokumentasi:</h4>
+                            <div class="dokumentasi-container">
+                                <div class="dokumentasi-item">
+                                    <img src="img/laporan/14-07-2025.jpg" alt="Dokumentasi 1" class="dokumentasi-img">
+                                </div>
+                                <div class="dokumentasi-item">
+                                    <img src="img/laporan/14-07-2025.jpg" alt="Dokumentasi 1" class="dokumentasi-img">
+                                </div>
+                                <div class="dokumentasi-item">
+                                    <img src="img/laporan/14-07-2025.jpg" alt="Dokumentasi 1" class="dokumentasi-img">
+                                </div>
+                                <div class="dokumentasi-item">
+                                    <img src="img/laporan/14-07-2025.jpg" alt="Dokumentasi 1" class="dokumentasi-img">
+                                </div>
+                                <div class="dokumentasi-item">
+                                    <img src="img/IMG_20250319_193524.jpg" alt="Dokumentasi 2" class="dokumentasi-img">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="laporan-card" data-aos="fade-up">
+                    <div class="card-header">
+                        <h3>Selasa, 2 Januari 2025</h3>
+                        <p>Hari Pertama PKL</p>
+                    </div>
+                    <div class="card-content">
+                        <p><strong>Aktivitas:</strong> Pengenalan lingkungan kerja...</p>
+                        <p><strong>Pembelajaran:</strong> Memahami budaya perusahaan...</p>
+                        
+                        <!-- Bagian Dokumentasi -->
+                        <div class="dokumentasi-section">
+                            <h4>Dokumentasi:</h4>
+                            <div class="dokumentasi-container">
+                                <div class="dokumentasi-item">
+                                    <img src="img/laporan/14-07-2025.jpg" alt="Dokumentasi 1" class="dokumentasi-img">
+                                </div>
+                                <div class="dokumentasi-item">
+                                    <img src="img/laporan/14-07-2025.jpg" alt="Dokumentasi 1" class="dokumentasi-img">
+                                </div>
+                                <div class="dokumentasi-item">
+                                    <img src="img/laporan/14-07-2025.jpg" alt="Dokumentasi 1" class="dokumentasi-img">
+                                </div>
+                                <div class="dokumentasi-item">
+                                    <img src="img/laporan/14-07-2025.jpg" alt="Dokumentasi 1" class="dokumentasi-img">
+                                </div>
+                                <div class="dokumentasi-item">
+                                    <img src="img/IMG_20250319_193524.jpg" alt="Dokumentasi 2" class="dokumentasi-img">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Laporan Desktop -->
+            <div class="report-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="cardHeader">
+                    <div class="card-header-content">
+                        <h3>Senin, 2 Januari 2025</h3>
+                        <p>Laporan harian kegiatan dan perkembangan</p>
+                    </div>
+                    <button class="dropdown-btn">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
+                
+                <div class="cardContent">
+                    <div class="section">
+                        <h4>Kegiatan</h4>
+                        <p>1. Meeting pagi dengan tim pengembangan untuk membahas progress proyek</p>
+                        <p>2. Implementasi fitur autentikasi pada aplikasi utama</p>
+                        <p>3. Review kode untuk memastikan kualitas sebelum deployment</p>
+                        <p>4. Diskusi dengan UI/UX designer tentang improvement antarmuka</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h4>Pembelajaran</h4>
+                        <p>1. Mempelajari teknik optimasi performa React menggunakan React.memo</p>
+                        <p>2. Memahami konsep baru tentang serverless architecture</p>
+                        <p>3. Eksperimen dengan library animasi Framer Motion untuk meningkatkan UX</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h4>Dokumentasi</h4>
+                        <p>Beberapa screenshot progress pengembangan hari ini:</p>
+                        <div class="gallery">
+                            <img src="https://via.placeholder.com/300x200?text=UI+Improvement" alt="UI Improvement">
+                            <img src="https://via.placeholder.com/300x200?text=Code+Review" alt="Code Review">
+                            <img src="https://via.placeholder.com/300x200?text=Team+Meeting" alt="Team Meeting">
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h4>Kendala</h4>
+                        <div class="kendala-item">
+                            <p>Masalah kompatibilitas library dengan versi Node.js terbaru</p>
+                        </div>
+                        <div class="kendala-item">
+                            <p>Koneksi database terkadang timeout pada beban tinggi</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="minggu3" class="tab-content active">
+            <!-- Laporan Grid (HP) -->
+            <div class="laporan-grid" data-aos="fade-up" data-aos-delay="100">
+                <div class="laporan-card" data-aos="fade-up">
+                    <div class="card-header">
+                        <h3>wSenin, 1 Januari 2025</h3>
+                        <p>Hari Pertama PKL</p>
+                    </div>
+                    <div class="card-content">
+                        <p><strong>Aktivitas:</strong> Pengenalan lingkungan kerja...</p>
+                        <p><strong>Pembelajaran:</strong> Memahami budaya perusahaan...</p>
+                        
+                        <!-- Bagian Dokumentasi -->
+                        <div class="dokumentasi-section">
+                            <h4>Dokumentasi:</h4>
+                            <div class="dokumentasi-container">
+                                <div class="dokumentasi-item">
+                                    <img src="img/laporan/14-07-2025.jpg" alt="Dokumentasi 1" class="dokumentasi-img">
+                                </div>
+                                <div class="dokumentasi-item">
+                                    <img src="img/laporan/14-07-2025.jpg" alt="Dokumentasi 1" class="dokumentasi-img">
+                                </div>
+                                <div class="dokumentasi-item">
+                                    <img src="img/laporan/14-07-2025.jpg" alt="Dokumentasi 1" class="dokumentasi-img">
+                                </div>
+                                <div class="dokumentasi-item">
+                                    <img src="img/laporan/14-07-2025.jpg" alt="Dokumentasi 1" class="dokumentasi-img">
+                                </div>
+                                <div class="dokumentasi-item">
+                                    <img src="img/IMG_20250319_193524.jpg" alt="Dokumentasi 2" class="dokumentasi-img">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="laporan-card" data-aos="fade-up">
+                    <div class="card-header">
+                        <h3>Selasa, 2 Januari 2025</h3>
+                        <p>Hari Pertama PKL</p>
+                    </div>
+                    <div class="card-content">
+                        <p><strong>Aktivitas:</strong> Pengenalan lingkungan kerja...</p>
+                        <p><strong>Pembelajaran:</strong> Memahami budaya perusahaan...</p>
+                        
+                        <!-- Bagian Dokumentasi -->
+                        <div class="dokumentasi-section">
+                            <h4>Dokumentasi:</h4>
+                            <div class="dokumentasi-container">
+                                <div class="dokumentasi-item">
+                                    <img src="img/laporan/14-07-2025.jpg" alt="Dokumentasi 1" class="dokumentasi-img">
+                                </div>
+                                <div class="dokumentasi-item">
+                                    <img src="img/laporan/14-07-2025.jpg" alt="Dokumentasi 1" class="dokumentasi-img">
+                                </div>
+                                <div class="dokumentasi-item">
+                                    <img src="img/laporan/14-07-2025.jpg" alt="Dokumentasi 1" class="dokumentasi-img">
+                                </div>
+                                <div class="dokumentasi-item">
+                                    <img src="img/laporan/14-07-2025.jpg" alt="Dokumentasi 1" class="dokumentasi-img">
+                                </div>
+                                <div class="dokumentasi-item">
+                                    <img src="img/IMG_20250319_193524.jpg" alt="Dokumentasi 2" class="dokumentasi-img">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Laporan Desktop -->
+            <div class="report-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="cardHeader">
+                    <div class="card-header-content">
+                        <h3>Senin, 2 Januari 2025</h3>
+                        <p>Laporan harian kegiatan dan perkembangan</p>
+                    </div>
+                    <button class="dropdown-btn">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
+                
+                <div class="cardContent">
+                    <div class="section">
+                        <h4>Kegiatan</h4>
+                        <p>1. Meeting pagi dengan tim pengembangan untuk membahas progress proyek</p>
+                        <p>2. Implementasi fitur autentikasi pada aplikasi utama</p>
+                        <p>3. Review kode untuk memastikan kualitas sebelum deployment</p>
+                        <p>4. Diskusi dengan UI/UX designer tentang improvement antarmuka</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h4>Pembelajaran</h4>
+                        <p>1. Mempelajari teknik optimasi performa React menggunakan React.memo</p>
+                        <p>2. Memahami konsep baru tentang serverless architecture</p>
+                        <p>3. Eksperimen dengan library animasi Framer Motion untuk meningkatkan UX</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h4>Dokumentasi</h4>
+                        <p>Beberapa screenshot progress pengembangan hari ini:</p>
+                        <div class="gallery">
+                            <img src="https://via.placeholder.com/300x200?text=UI+Improvement" alt="UI Improvement">
+                            <img src="https://via.placeholder.com/300x200?text=Code+Review" alt="Code Review">
+                            <img src="https://via.placeholder.com/300x200?text=Team+Meeting" alt="Team Meeting">
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h4>Kendala</h4>
+                        <div class="kendala-item">
+                            <p>Masalah kompatibilitas library dengan versi Node.js terbaru</p>
+                        </div>
+                        <div class="kendala-item">
+                            <p>Koneksi database terkadang timeout pada beban tinggi</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="minggu4" class="tab-content active">
+            <!-- Laporan Grid (HP) -->
+            <div class="laporan-grid" data-aos="fade-up" data-aos-delay="100">
+                <div class="laporan-card" data-aos="fade-up">
+                    <div class="card-header">
+                        <h3>Senin, 1 Januari 2025</h3>
+                        <p>Hari Pertama PKL</p>
+                    </div>
+                    <div class="card-content">
+                        <p><strong>Aktivitas:</strong> Pengenalan lingkungan kerja...</p>
+                        <p><strong>Pembelajaran:</strong> Memahami budaya perusahaan...</p>
+                        
+                        <!-- Bagian Dokumentasi -->
+                        <div class="dokumentasi-section">
+                            <h4>Dokumentasi:</h4>
+                            <div class="dokumentasi-container">
+                                <div class="dokumentasi-item">
+                                    <img src="img/laporan/14-07-2025.jpg" alt="Dokumentasi 1" class="dokumentasi-img">
+                                </div>
+                                <div class="dokumentasi-item">
+                                    <img src="img/laporan/14-07-2025.jpg" alt="Dokumentasi 1" class="dokumentasi-img">
+                                </div>
+                                <div class="dokumentasi-item">
+                                    <img src="img/laporan/14-07-2025.jpg" alt="Dokumentasi 1" class="dokumentasi-img">
+                                </div>
+                                <div class="dokumentasi-item">
+                                    <img src="img/laporan/14-07-2025.jpg" alt="Dokumentasi 1" class="dokumentasi-img">
+                                </div>
+                                <div class="dokumentasi-item">
+                                    <img src="img/IMG_20250319_193524.jpg" alt="Dokumentasi 2" class="dokumentasi-img">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="laporan-card" data-aos="fade-up">
+                    <div class="card-header">
+                        <h3>Selasa, 2 Januari 2025</h3>
+                        <p>Hari Pertama PKL</p>
+                    </div>
+                    <div class="card-content">
+                        <p><strong>Aktivitas:</strong> Pengenalan lingkungan kerja...</p>
+                        <p><strong>Pembelajaran:</strong> Memahami budaya perusahaan...</p>
+                        
+                        <!-- Bagian Dokumentasi -->
+                        <div class="dokumentasi-section">
+                            <h4>Dokumentasi:</h4>
+                            <div class="dokumentasi-container">
+                                <div class="dokumentasi-item">
+                                    <img src="img/laporan/14-07-2025.jpg" alt="Dokumentasi 1" class="dokumentasi-img">
+                                </div>
+                                <div class="dokumentasi-item">
+                                    <img src="img/laporan/14-07-2025.jpg" alt="Dokumentasi 1" class="dokumentasi-img">
+                                </div>
+                                <div class="dokumentasi-item">
+                                    <img src="img/laporan/14-07-2025.jpg" alt="Dokumentasi 1" class="dokumentasi-img">
+                                </div>
+                                <div class="dokumentasi-item">
+                                    <img src="img/laporan/14-07-2025.jpg" alt="Dokumentasi 1" class="dokumentasi-img">
+                                </div>
+                                <div class="dokumentasi-item">
+                                    <img src="img/IMG_20250319_193524.jpg" alt="Dokumentasi 2" class="dokumentasi-img">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Laporan Desktop -->
+            <div class="report-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="cardHeader">
+                    <div class="card-header-content">
+                        <h3>Senin, 2 Januari 2025</h3>
+                        <p>Laporan harian kegiatan dan perkembangan</p>
+                    </div>
+                    <button class="dropdown-btn">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
+                
+                <div class="cardContent">
+                    <div class="section">
+                        <h4>Kegiatan</h4>
+                        <p>1. Meeting pagi dengan tim pengembangan untuk membahas progress proyek</p>
+                        <p>2. Implementasi fitur autentikasi pada aplikasi utama</p>
+                        <p>3. Review kode untuk memastikan kualitas sebelum deployment</p>
+                        <p>4. Diskusi dengan UI/UX designer tentang improvement antarmuka</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h4>Pembelajaran</h4>
+                        <p>1. Mempelajari teknik optimasi performa React menggunakan React.memo</p>
+                        <p>2. Memahami konsep baru tentang serverless architecture</p>
+                        <p>3. Eksperimen dengan library animasi Framer Motion untuk meningkatkan UX</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h4>Dokumentasi</h4>
+                        <p>Beberapa screenshot progress pengembangan hari ini:</p>
+                        <div class="gallery">
+                            <img src="https://via.placeholder.com/300x200?text=UI+Improvement" alt="UI Improvement">
+                            <img src="https://via.placeholder.com/300x200?text=Code+Review" alt="Code Review">
+                            <img src="https://via.placeholder.com/300x200?text=Team+Meeting" alt="Team Meeting">
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h4>Kendala</h4>
+                        <div class="kendala-item">
+                            <p>Masalah kompatibilitas library dengan versi Node.js terbaru</p>
+                        </div>
+                        <div class="kendala-item">
+                            <p>Koneksi database terkadang timeout pada beban tinggi</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </section>
+
+    <!-- Footer -->
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Tentang Saya</h3>
+                <p>Siswa SMK Negeri 1 Rengat Barat jurusan Teknik Komputer dan Jaringan.
+                Saat ini sedang melaksanakan Praktek Kerja Lapangan di Feriari Komputer & CCTV</p>
+                <div class="social-links">
+                    <a href="https://instagram.com/akbilahmadroyani" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/in/akbil-ahmad-royani-8994b636b/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/wifier345" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://wa.me/6285134109503" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Navigasi Cepat</h3>
+                <ul class="footer-links">
+                    <li><a href="../index.html"><i class="fas fa-home"></i> Beranda</a></li>
+                    <li><a href="laporan1.html"><i class="fas fa-file-alt"></i> Juli</a></li>
+                    <li><a href="laporan2.html"><i class="fas fa-file-alt"></i> Agustus</a></li>
+                    <li><a href="laporan3.html"><i class="fas fa-file-alt"></i> September</a></li>
+                    <li><a href="laporan4.html"><i class="fas fa-file-alt"></i> Oktober</a></li>
+                    <li><a href="laporan5.html"><i class="fas fa-file-alt"></i> November</a></li>
+                    <li><a href="laporan6.html"><i class="fas fa-file-alt"></i> Desember</a></li>
+                    <li><a href="../kontak.html"><i class="fas fa-envelope"></i> Halaman Kontak</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Kontak PKL</h3>
+                <ul class="footer-links">
+                    <li><a href="https://www.google.com/maps/place/Ferari+Komputer+%26+CCTV/@-0.374052,102.5361317,17z/data=!3m1!4b1!4m6!3m5!1s0x2e29bbfab45218dd:0x3cdd293de9b0a4bf!8m2!3d-0.374052!4d102.5410026!16s%2Fg%2F11c60bzjqt?entry=ttu&g_ep=EgoyMDI1MDYxMS4wIKXMDSoASAFQAw%3D%3D" target="_blank"><i class="fas fa-building"></i> Feriari Komputer & CCTV</a></li>
+                    <li><a href="https://maps.app.goo.gl/WyVWEtUTtB6o7Qsy9"><i class="fas fa-map-marker-alt"></i> Jl. Azki Aris, Kp. Besar Kota, Kec. Rengat, Kabupaten Indragiri Hulu, Riau</a></li>
+                    <li><a href="https://wa.me/6281374207700"><i class="fas fa-phone"></i> 081374207700</a></li>
+                    <li><a target="_blank" href="https://id4488561-ferrari-komputer.contact.page/"><i class="fas fa-globe"></i> ferrari-komputer.contact.page</a></li>
+                    <li><a href="https://id4488561-ferrari-komputer.contact.page/"><i class="fas fa-user-tie"></i> Pembimbing: Bapak Ahmad Surya</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            &copy; 2025 Laporan Harian PKL. Hak Cipta Dilindungi | Dibuat oleh <a href="https://tkjboys.site" target="_blank">Akbil Ahmad Royani</a> 
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inisialisasi AOS
+            AOS.init({
+                duration: 800,
+                once: true,
+                easing: 'ease-in-out',
+                mirror: false
+            });
+
+             // Loading screen
+            window.addEventListener('load', function() {
+                const loadingScreen = document.getElementById('loading-screen');
+                setTimeout(() => {
+                    loadingScreen.style.opacity = 0;
+                    loadingScreen.style.visibility = 'hidden';
+                }, 1000);
+            });
+    
+            // Sticky navbar effect
+            window.addEventListener('scroll', function() {
+                const navbar = document.querySelector('.navbar');
+                navbar.classList.toggle('scrolled', window.scrollY > 50);
+            });
+    
+            // Initialize all components
+            setupTabs();
+            setupAccordions();
+            setupSearch();
+            setupMobileMenu();
+            setupMobileDropdown();
+            setupReportCardDropdowns();
+            setupLightbox(); // Jika menggunakan lightbox untuk gambar
+            
+            function setupSearch() {
+                const searchBtn = document.getElementById('search-button');
+                const searchInput = document.getElementById('search-input');
+                
+                if (searchBtn && searchInput) {
+                    // Handle search button click
+                    searchBtn.addEventListener('click', performSearch);
+                    
+                    // Handle Enter key press
+                    searchInput.addEventListener('keypress', function(e) {
+                        if (e.key === 'Enter') {
+                            performSearch();
+                        }
+                    });
+                    
+                    function performSearch() {
+                        const searchTerm = searchInput.value.trim().toLowerCase();
+                        
+                        if (searchTerm === '') {
+                            resetSearch();
+                            return;
+                        }
+                        
+                        let foundResults = false;
+                        
+                        // Search through all tab contents
+                        document.querySelectorAll('.tab-content').forEach(tabContent => {
+                            let tabHasResults = false;
+                            
+                            // Search in sidebar items (desktop)
+                            tabContent.querySelectorAll('.sidebar-item').forEach(item => {
+                                const cardText = item.textContent.toLowerCase();
+                                const cardId = item.getAttribute('data-card-id');
+                                
+                                if (cardText.includes(searchTerm)) {
+                                    foundResults = true;
+                                    tabHasResults = true;
+                                    highlightResult(item, cardId, tabContent);
+                                } else {
+                                    removeHighlight(item);
+                                }
+                            });
+                            
+                            // Search in mobile cards
+                            tabContent.querySelectorAll('.mobile-card').forEach(card => {
+                                const cardText = card.textContent.toLowerCase();
+                                
+                                if (cardText.includes(searchTerm)) {
+                                    foundResults = true;
+                                    tabHasResults = true;
+                                    highlightResult(card, null, tabContent);
+                                } else {
+                                    removeHighlight(card);
+                                }
+                            });
+                            
+                            // Show/hide tabs based on results
+                            const tabId = tabContent.id;
+                            const correspondingTab = document.querySelector(`.tab[data-tab="${tabId}"]`);
+                            if (correspondingTab) {
+                                if (tabHasResults) {
+                                    correspondingTab.style.display = 'block';
+                                } else {
+                                    correspondingTab.style.display = 'none';
+                                }
+                            }
+                        });
+
+                        // Add this to the performSearch function
+                        const resultsInfo = document.getElementById('search-results-info');
+                        if (foundResults) {
+                            const resultCount = document.querySelectorAll('.search-highlight').length;
+                            resultsInfo.textContent = `Ditemukan ${resultCount} laporan`;
+                            resultsInfo.style.display = 'block';
+                            setTimeout(() => {
+                                resultsInfo.style.display = 'none';
+                            }, 3000);
+                        }
+                        
+                        if (!foundResults) {
+                            showNoResultsMessage();
+                        }
+                    }
+                    
+                    function highlightResult(element, cardId, tabContent) {
+                        // Add highlight style
+                        element.style.backgroundColor = 'rgba(67, 97, 238, 0.1)';
+                        element.style.boxShadow = '0 0 0 2px var(--primary)';
+                        
+                        // Scroll to result
+                        setTimeout(() => {
+                            element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                        }, 100);
+                        
+                        // If desktop, show the content
+                        if (window.innerWidth > 768 && cardId) {
+                            tabContent.querySelector('.laporan-content').innerHTML = '';
+                            const originalContent = document.getElementById(cardId);
+                            if (originalContent) {
+                                tabContent.querySelector('.laporan-content').appendChild(originalContent.cloneNode(true));
+                            }
+                            
+                            // Activate the tab if not active
+                            if (!tabContent.classList.contains('active')) {
+                                const tabId = tabContent.id;
+                                document.querySelector(`.tab[data-tab="${tabId}"]`).click();
+                            }
+                        }
+                        
+                        // If mobile, expand the card
+                        if (window.innerWidth <= 768) {
+                            const content = element.querySelector('.card-content');
+                            if (content) {
+                                content.classList.add('active');
+                                element.querySelector('.card-header').classList.add('active');
+                            }
+                        }
+
+                        function highlightText(element, searchTerm) {
+                            const text = element.textContent;
+                            const regex = new RegExp(searchTerm, 'gi');
+                            element.innerHTML = text.replace(regex, match => 
+                                `<span class="search-match">${match}</span>`
+                            );
+                        }
+                    }
+                    
+                    function removeHighlight(element) {
+                        element.style.backgroundColor = '';
+                        element.style.boxShadow = '';
+                    }
+                    
+                    function resetSearch() {
+                        // Reset all tabs and cards
+                        document.querySelectorAll('.tab').forEach(tab => {
+                            tab.style.display = 'block';
+                        });
+                        
+                        document.querySelectorAll('.sidebar-item, .mobile-card').forEach(element => {
+                            removeHighlight(element);
+                        });
+                        
+                        // Reset mobile cards to default state
+                        if (window.innerWidth <= 768) {
+                            document.querySelectorAll('.mobile-card .card-content').forEach(content => {
+                                content.classList.add('active');
+                                content.previousElementSibling.classList.add('active');
+                            });
+                        }
+                    }
+                    
+                    function showNoResultsMessage() {
+                        alert('Tidak ditemukan laporan dengan kata kunci: ' + searchInput.value);
+                    }
+                }
+            }
+                
+            // Tab functionality
+            function setupTabs() {
+                const tabs = document.querySelectorAll('.tab');
+                const tabContents = document.querySelectorAll('.tab-content');
+                
+                tabs.forEach(tab => {
+                    tab.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        
+                        // Remove active class from all tabs
+                        tabs.forEach(t => t.classList.remove('active'));
+                        // Add active class to clicked tab
+                        tab.classList.add('active');
+                        
+                        // Hide all tab contents
+                        tabContents.forEach(content => {
+                            content.classList.remove('active');
+                        });
+                        
+                        // Show selected tab content
+                        const tabId = tab.getAttribute('data-tab');
+                        const activeContent = document.getElementById(tabId);
+                        if (activeContent) {
+                            activeContent.classList.add('active');
+                        }
+                    });
+                });
+
+                // Aktifkan tab pertama secara default
+                if (tabs.length > 0) {
+                    tabs[0].click();
+                }
+            }
+    
+            // Accordion functionality
+            function setupAccordions() {
+            const cardHeaders = document.querySelectorAll('.card-header');
+            
+            cardHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const content = header.nextElementSibling;
+                    const isMobile = window.innerWidth <= 768; // Sesuaikan dengan breakpoint mobile Anda
+                    
+                    if (!isMobile) {
+                        // Desktop behavior - hanya satu card yang terbuka
+                        document.querySelectorAll('.card-content').forEach(c => {
+                            if (c !== content) {
+                                c.classList.remove('active');
+                                c.previousElementSibling.classList.remove('active');
+                            }
+                        });
+                    }
+                    
+                    // Toggle card yang diklik
+                    header.classList.toggle('active');
+                    content.classList.toggle('active');
+                });
+            });
+        }
+
+        // Tambahkan event listener untuk resize window
+        window.addEventListener('resize', function() {
+            // Jika beralih ke mobile, biarkan semua card terbuka
+            if (window.innerWidth <= 768) {
+                document.querySelectorAll('.card-content').forEach(content => {
+                    content.classList.add('active');
+                    content.previousElementSibling.classList.add('active');
+                });
+            } else {
+                // Jika beralih ke desktop, hanya satu card yang terbuka
+                const firstCardHeader = document.querySelector('.card-header');
+                if (firstCardHeader) {
+                    document.querySelectorAll('.card-content').forEach(content => {
+                        content.classList.remove('active');
+                        content.previousElementSibling.classList.remove('active');
+                    });
+                    firstCardHeader.classList.add('active');
+                    firstCardHeader.nextElementSibling.classList.add('active');
+                }
+            }
+        });
+
+        // Panggil saat pertama kali load
+        setupAccordions();
+            // Search functionality
+            function setupSearch() {
+                const searchBtn = document.getElementById('search-button');
+                if (searchBtn) {
+                    searchBtn.addEventListener('click', function() {
+                        const searchTerm = document.getElementById('search-input').value.toLowerCase();
+                        if (searchTerm.trim() !== '') {
+                            const cards = document.querySelectorAll('.laporan-card');
+                            let found = false;
+                            
+                            cards.forEach(card => {
+                                const text = card.textContent.toLowerCase();
+                                if (text.includes(searchTerm)) {
+                                    card.style.boxShadow = '0 0 0 3px rgba(247, 37, 133, 0.3)';
+                                    setTimeout(() => {
+                                        card.style.boxShadow = 'var(--shadow)';
+                                    }, 3000);
+                                    found = true;
+                                    
+                                    // Auto-scroll to the card
+                                    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                }
+                            });
+                            
+                            if (!found) {
+                                alert('Tidak ditemukan laporan dengan kata kunci: ' + searchTerm);
+                            }
+                        }
+                    });
+                }
+            }
+    
+            // Mobile menu toggle
+            function setupMobileMenu() {
+                const menuBtn = document.querySelector('.mobile-menu-btn');
+                const navLinks = document.querySelector('.nav-links, .nav-links-laporan');
+                
+                if (menuBtn && navLinks) {
+                    menuBtn.addEventListener('click', () => {
+                        navLinks.classList.toggle('active');
+                        menuBtn.innerHTML = navLinks.classList.contains('active') 
+                            ? '<i class="fas fa-times"></i>' 
+                            : '<i class="fas fa-bars"></i>';
+                    });
+                }
+            }
+    
+            // Mobile dropdown toggle
+            function setupMobileDropdown() {
+                document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
+                    toggle.addEventListener('click', (e) => {
+                        if (window.innerWidth <= 768) {
+                            e.preventDefault();
+                            const dropdown = toggle.parentElement;
+                            dropdown.classList.toggle('active');
+                        }
+                    });
+                });
+            }
+            // Report Card Dropdown (your original functionality)
+            function setupReportCardDropdowns() {
+                document.querySelectorAll('.cardHeader').forEach(header => {
+                    header.addEventListener('click', function() {
+                        const Dcard = this.closest('.report-card');
+                        const Dcontent = Dcard.querySelector('.cardContent');
+                        const Dbtn = Dcard.querySelector('.dropdown-btn');
+                        
+                        if (Dcontent && Dbtn) {
+                            Dcontent.classList.toggle('active');
+                            Dbtn.classList.toggle('active');
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
